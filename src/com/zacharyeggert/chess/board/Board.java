@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Board {
     public static final int BOARD_SIZE = 8;
 
-    private Space[][] board;
+    public Space[][] board;
     private boolean whiteTurn;
     private boolean whiteKingInCheck;
     private boolean blackKingInCheck;

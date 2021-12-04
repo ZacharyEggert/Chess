@@ -8,6 +8,7 @@ public class Queen extends GamePiece {
         super(PieceType.QUEEN, color);
     }
 
+    @Override
     public boolean isValidMove(int startingX, int startingY, int endingX, int endingY) {
         return isValidQueenMove(startingX, startingY, endingX, endingY);
     }

@@ -8,6 +8,7 @@ public class Bishop extends GamePiece {
         super(PieceType.BISHOP, color);
     }
 
+    @Override
     public boolean isValidMove(int startingX, int startingY, int endingX, int endingY) {
         return isValidBishopMove(startingX, startingY, endingX, endingY);
     }

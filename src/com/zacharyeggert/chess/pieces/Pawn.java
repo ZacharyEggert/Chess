@@ -8,6 +8,7 @@ public class Pawn extends GamePiece {
         super(PieceType.PAWN, color);
     }
 
+    @Override
     public boolean isValidMove(int startingX, int startingY, int endingX, int endingY) {
         return isValidPawnMove(startingX, startingY, endingX, endingY);
     }

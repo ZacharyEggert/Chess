@@ -14,23 +14,23 @@ public class GamePiece {
     public GamePiece(PieceType type, PieceColor color) {
         this.type = type;
         this.color = color;
-        this.isSliding = type == PieceType.ROOK || type == PieceType.QUEEN || type == PieceType.BISHOP;
+        this.isSliding = type == PieceType.ROOK || type == PieceType.QUEEN || type == PieceType.BISHOP || type == PieceType.PAWN;
     }
 
     public static GamePiece GetPieceFromChar(char charAt) {
         return switch (charAt) {
-            case 'r' -> new GamePiece(PieceType.ROOK, PieceColor.WHITE);
-            case 'R' -> new GamePiece(PieceType.ROOK, PieceColor.BLACK);
-            case 'n' -> new GamePiece(PieceType.KNIGHT, PieceColor.WHITE);
-            case 'N' -> new GamePiece(PieceType.KNIGHT, PieceColor.BLACK);
-            case 'b' -> new GamePiece(PieceType.BISHOP, PieceColor.WHITE);
-            case 'B' -> new GamePiece(PieceType.BISHOP, PieceColor.BLACK);
-            case 'q' -> new GamePiece(PieceType.QUEEN, PieceColor.WHITE);
-            case 'Q' -> new GamePiece(PieceType.QUEEN, PieceColor.BLACK);
-            case 'k' -> new GamePiece(PieceType.KING, PieceColor.WHITE);
-            case 'K' -> new GamePiece(PieceType.KING, PieceColor.BLACK);
-            case 'p' -> new GamePiece(PieceType.PAWN, PieceColor.WHITE);
-            case 'P' -> new GamePiece(PieceType.PAWN, PieceColor.BLACK);
+            case 'r' -> new Rook(PieceColor.WHITE);
+            case 'R' -> new Rook(PieceColor.BLACK);
+            case 'n' -> new Knight(PieceColor.WHITE);
+            case 'N' -> new Knight(PieceColor.BLACK);
+            case 'b' -> new Bishop(PieceColor.WHITE);
+            case 'B' -> new Bishop(PieceColor.BLACK);
+            case 'q' -> new Queen(PieceColor.WHITE);
+            case 'Q' -> new Queen(PieceColor.BLACK);
+            case 'k' -> new King(PieceColor.WHITE);
+            case 'K' -> new King(PieceColor.BLACK);
+            case 'p' -> new Pawn(PieceColor.WHITE);
+            case 'P' -> new Pawn(PieceColor.BLACK);
             default -> null;
         };
     }
@@ -47,33 +47,34 @@ public class GamePiece {
         return true;
     }
 
-    public boolean isValidPawnMove(int startingX, int startingY, int endingX, int endingY) {
+    boolean isValidPawnMove(int startingX, int startingY, int endingX, int endingY) {
         int allowedY = (color == PieceColor.WHITE) ? 1 : -1;
+        int allowedY2 = allowedY;
         if (!hasMoved) {
-            allowedY *= 2;
+            allowedY2 *= 2;
         }
-        return (endingX == startingX && endingY == startingY + allowedY);
+        return (endingX == startingX && endingY == startingY + allowedY) || (endingX == startingX && endingY == startingY + allowedY2);
     }
 
-    public boolean isValidRookMove(int startingX, int startingY, int endingX, int endingY) {
+    boolean isValidRookMove(int startingX, int startingY, int endingX, int endingY) {
         return (startingX == endingX || startingY == endingY);
     }
 
-    public boolean isValidKnightMove(int startingX, int startingY, int endingX, int endingY) {
+    boolean isValidKnightMove(int startingX, int startingY, int endingX, int endingY) {
         int xDiff = Math.abs(startingX - endingX);
         int yDiff = Math.abs(startingY - endingY);
         return (xDiff == 2 && yDiff == 1) || (xDiff == 1 && yDiff == 2);
     }
 
-    public boolean isValidBishopMove(int startingX, int startingY, int endingX, int endingY) {
+    boolean isValidBishopMove(int startingX, int startingY, int endingX, int endingY) {
         return (Math.abs(startingX - endingX) == Math.abs(startingY - endingY));
     }
 
-    public boolean isValidQueenMove(int startingX, int startingY, int endingX, int endingY) {
+    boolean isValidQueenMove(int startingX, int startingY, int endingX, int endingY) {
         return isValidRookMove(startingX, startingY, endingX, endingY) || isValidBishopMove(startingX, startingY, endingX, endingY);
     }
 
-    public boolean isValidKingMove(int startingX, int startingY, int endingX, int endingY) {
+    boolean isValidKingMove(int startingX, int startingY, int endingX, int endingY) {
         int xDiff = Math.abs(startingX - endingX);
         int yDiff = Math.abs(startingY - endingY);
         return (xDiff <= 1 && yDiff <= 1);
@@ -112,9 +113,9 @@ public class GamePiece {
         if (targetSpace.getPiece() != null && targetSpace.getPiece().getColor() == this.getColor()) {
             return;
         }
-        if (isValidMove(currentSpace.getX(), currentSpace.getY(), targetSpace.getX(), targetSpace.getY())) {
-            hasMoved = true;
-            targetSpace.setPiece(currentSpace.getPiece());
+        if (this.isValidMove(currentSpace.getX(), currentSpace.getY(), targetSpace.getX(), targetSpace.getY())) {
+            this.setHasMoved(true);
+            targetSpace.setPiece(this);
             currentSpace.setPiece(null);
         }
     }

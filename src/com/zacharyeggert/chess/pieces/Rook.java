@@ -8,6 +8,7 @@ public class Rook extends GamePiece {
         super(PieceType.ROOK, color);
     }
 
+    @Override
     public boolean isValidMove(int startingX, int startingY, int endingX, int endingY) {
         return isValidRookMove(startingX, startingY, endingX, endingY);
     }

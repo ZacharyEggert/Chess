@@ -8,6 +8,7 @@ public class Knight extends GamePiece {
         super(PieceType.KNIGHT, color);
     }
 
+    @Override
     public boolean isValidMove(int startingX, int startingY, int endingX, int endingY) {
         return isValidKnightMove(startingX, startingY, endingX, endingY);
     }
