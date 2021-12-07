@@ -1,11 +1,12 @@
 package com.zacharyeggert.chess.pieces;
 
+import com.zacharyeggert.chess.board.Board;
 import com.zacharyeggert.chess.pieces.enums.PieceColor;
 import com.zacharyeggert.chess.pieces.enums.PieceType;
 
 public class Rook extends GamePiece {
-    public Rook(PieceColor color) {
-        super(PieceType.ROOK, color);
+    public Rook(PieceColor color, Board board) {
+        super(PieceType.ROOK, color, board);
     }
 
     @Override

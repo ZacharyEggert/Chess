@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 public class BoardUIHandler {
 
-    private final int width;
-    private final int height;
+    private int width = 640;
+    private int height = 640;
 
     private final Board board;
 

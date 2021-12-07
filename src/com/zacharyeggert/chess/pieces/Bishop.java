@@ -1,11 +1,12 @@
 package com.zacharyeggert.chess.pieces;
 
+import com.zacharyeggert.chess.board.Board;
 import com.zacharyeggert.chess.pieces.enums.PieceColor;
 import com.zacharyeggert.chess.pieces.enums.PieceType;
 
 public class Bishop extends GamePiece {
-    public Bishop(PieceColor color) {
-        super(PieceType.BISHOP, color);
+    public Bishop(PieceColor color, Board board) {
+        super(PieceType.BISHOP, color, board);
     }
 
     @Override

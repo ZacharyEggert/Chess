@@ -10,27 +10,29 @@ public class GamePiece {
     private final PieceColor color;
     private final boolean isSliding;
     private boolean hasMoved;
+    private Board board;
 
-    public GamePiece(PieceType type, PieceColor color) {
+    public GamePiece(PieceType type, PieceColor color, Board board) {
         this.type = type;
         this.color = color;
+        this.board = board;
         this.isSliding = type == PieceType.ROOK || type == PieceType.QUEEN || type == PieceType.BISHOP || type == PieceType.PAWN;
     }
 
-    public static GamePiece GetPieceFromChar(char charAt) {
+    public static GamePiece GetPieceFromChar(char charAt, Board board) {
         return switch (charAt) {
-            case 'r' -> new Rook(PieceColor.WHITE);
-            case 'R' -> new Rook(PieceColor.BLACK);
-            case 'n' -> new Knight(PieceColor.WHITE);
-            case 'N' -> new Knight(PieceColor.BLACK);
-            case 'b' -> new Bishop(PieceColor.WHITE);
-            case 'B' -> new Bishop(PieceColor.BLACK);
-            case 'q' -> new Queen(PieceColor.WHITE);
-            case 'Q' -> new Queen(PieceColor.BLACK);
-            case 'k' -> new King(PieceColor.WHITE);
-            case 'K' -> new King(PieceColor.BLACK);
-            case 'p' -> new Pawn(PieceColor.WHITE);
-            case 'P' -> new Pawn(PieceColor.BLACK);
+            case 'r' -> new Rook(PieceColor.WHITE, board);
+            case 'R' -> new Rook(PieceColor.BLACK, board);
+            case 'n' -> new Knight(PieceColor.WHITE, board);
+            case 'N' -> new Knight(PieceColor.BLACK, board);
+            case 'b' -> new Bishop(PieceColor.WHITE, board);
+            case 'B' -> new Bishop(PieceColor.BLACK, board);
+            case 'q' -> new Queen(PieceColor.WHITE, board);
+            case 'Q' -> new Queen(PieceColor.BLACK, board);
+            case 'k' -> new King(PieceColor.WHITE, board);
+            case 'K' -> new King(PieceColor.BLACK, board);
+            case 'p' -> new Pawn(PieceColor.WHITE, board);
+            case 'P' -> new Pawn(PieceColor.BLACK, board);
             default -> null;
         };
     }
@@ -53,7 +55,13 @@ public class GamePiece {
         if (!hasMoved) {
             allowedY2 *= 2;
         }
-        return (endingX == startingX && endingY == startingY + allowedY) || (endingX == startingX && endingY == startingY + allowedY2);
+        return (
+                    (endingX == startingX && endingY == startingY + allowedY) ||
+                    (endingX == startingX && endingY == startingY + allowedY2)) ||
+                (Math.abs(endingX - startingX) == 1 &&
+                        Math.abs(endingY - startingY) == 1 &&
+                        board.board[endingX][endingY].getPiece() != null &&
+                        board.board[endingX][endingY].getPiece().getColor() != color);
     }
 
     boolean isValidRookMove(int startingX, int startingY, int endingX, int endingY) {

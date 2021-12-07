@@ -1,11 +1,13 @@
 package com.zacharyeggert.chess.pieces;
 
+import com.zacharyeggert.chess.board.Board;
 import com.zacharyeggert.chess.pieces.enums.PieceColor;
 import com.zacharyeggert.chess.pieces.enums.PieceType;
 
 public class Pawn extends GamePiece {
-    public Pawn(PieceColor color) {
-        super(PieceType.PAWN, color);
+
+    public Pawn(PieceColor color, Board board) {
+        super(PieceType.PAWN, color, board);
     }
 
     @Override

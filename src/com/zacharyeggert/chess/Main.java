@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         Board board = new Board();
-        GamePiece[][] InitialState = BoardStates.ConvertBoardToPieces(BoardStates.InitialBoard);
+        GamePiece[][] InitialState = BoardStates.ConvertBoardToPieces(BoardStates.InitialBoard, board);
         board.setAllPieces(InitialState);
         board.setWhiteTurn(true);
 
